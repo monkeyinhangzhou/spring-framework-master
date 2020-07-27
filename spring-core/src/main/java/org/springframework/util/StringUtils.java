@@ -60,16 +60,22 @@ import org.springframework.lang.Nullable;
  */
 public abstract class StringUtils {
 
+//	空字符串数组
 	private static final String[] EMPTY_STRING_ARRAY = {};
 
+//	分隔符
 	private static final String FOLDER_SEPARATOR = "/";
 
+//	windows分隔符
 	private static final String WINDOWS_FOLDER_SEPARATOR = "\\";
 
+//	上层路径
 	private static final String TOP_PATH = "..";
 
+//	当前路径
 	private static final String CURRENT_PATH = ".";
 
+//
 	private static final char EXTENSION_SEPARATOR = '.';
 
 
@@ -93,6 +99,7 @@ public abstract class StringUtils {
 	 * @see #hasLength(String)
 	 * @see #hasText(String)
 	 */
+//	检查字对象是否为空
 	public static boolean isEmpty(@Nullable Object str) {
 		return (str == null || "".equals(str));
 	}
@@ -113,6 +120,7 @@ public abstract class StringUtils {
 	 * @see #hasLength(String)
 	 * @see #hasText(CharSequence)
 	 */
+	//给定CharSequence不是null,长度也不为零
 	public static boolean hasLength(@Nullable CharSequence str) {
 		return (str != null && str.length() > 0);
 	}
@@ -165,10 +173,16 @@ public abstract class StringUtils {
 	 * @see #hasLength(String)
 	 * @see Character#isWhitespace
 	 */
+//	str不为空,且包含有效内容(非空白符)
 	public static boolean hasText(@Nullable String str) {
 		return (str != null && !str.isEmpty() && containsText(str));
 	}
 
+	/**
+	 * 是否包含有效内容(非空白符)
+	 * @param str 要判断的字符串
+	 * @return
+	 */
 	private static boolean containsText(CharSequence str) {
 		int strLen = str.length();
 		for (int i = 0; i < strLen; i++) {
@@ -181,6 +195,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Check whether the given {@code CharSequence} contains any whitespace characters.
+	 * 检查给定的CharSequence是否含有任何的空白符
 	 * @param str the {@code CharSequence} to check (may be {@code null})
 	 * @return {@code true} if the {@code CharSequence} is not empty and
 	 * contains at least 1 whitespace character
@@ -193,6 +208,7 @@ public abstract class StringUtils {
 
 		int strLen = str.length();
 		for (int i = 0; i < strLen; i++) {
+//			只要有一个空白字符就返回true
 			if (Character.isWhitespace(str.charAt(i))) {
 				return true;
 			}
@@ -213,6 +229,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Trim leading and trailing whitespace from the given {@code String}.
+	 * 修剪前后导空白
 	 * @param str the {@code String} to check
 	 * @return the trimmed {@code String}
 	 * @see java.lang.Character#isWhitespace
@@ -225,6 +242,7 @@ public abstract class StringUtils {
 		int beginIndex = 0;
 		int endIndex = str.length() - 1;
 
+//		两个下标,记录开始和结束位置
 		while (beginIndex <= endIndex && Character.isWhitespace(str.charAt(beginIndex))) {
 			beginIndex++;
 		}
@@ -233,12 +251,14 @@ public abstract class StringUtils {
 			endIndex--;
 		}
 
+//		beginIndex截取endIndex+1 个
 		return str.substring(beginIndex, endIndex + 1);
 	}
 
 	/**
 	 * Trim <i>all</i> whitespace from the given {@code String}:
 	 * leading, trailing, and in between characters.
+	 * 修剪给定字符串中的所有空白
 	 * @param str the {@code String} to check
 	 * @return the trimmed {@code String}
 	 * @see java.lang.Character#isWhitespace
@@ -261,6 +281,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Trim leading whitespace from the given {@code String}.
+	 * 修剪给定字符串中的前导空白
 	 * @param str the {@code String} to check
 	 * @return the trimmed {@code String}
 	 * @see java.lang.Character#isWhitespace
@@ -272,6 +293,7 @@ public abstract class StringUtils {
 
 		StringBuilder sb = new StringBuilder(str);
 		while (sb.length() > 0 && Character.isWhitespace(sb.charAt(0))) {
+//			删除给定索引处的字符,如果是补充字符则无法用此方法删除
 			sb.deleteCharAt(0);
 		}
 		return sb.toString();
@@ -279,6 +301,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Trim trailing whitespace from the given {@code String}.
+	 * 修剪尾随空格
 	 * @param str the {@code String} to check
 	 * @return the trimmed {@code String}
 	 * @see java.lang.Character#isWhitespace
@@ -297,6 +320,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Trim all occurrences of the supplied leading character from the given {@code String}.
+	 * 修剪特定字符的前导字符
 	 * @param str the {@code String} to check
 	 * @param leadingCharacter the leading character to be trimmed
 	 * @return the trimmed {@code String}
@@ -333,6 +357,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Test if the given {@code String} starts with the specified prefix,
+	 * 是否以指定前缀开始
 	 * ignoring upper/lower case.
 	 * @param str the {@code String} to check
 	 * @param prefix the prefix to look for
@@ -340,6 +365,11 @@ public abstract class StringUtils {
 	 */
 	public static boolean startsWithIgnoreCase(@Nullable String str, @Nullable String prefix) {
 		return (str != null && prefix != null && str.length() >= prefix.length() &&
+//				ignoreCase为真表示忽略大小写比较
+//				起始位置
+//				字符串参数
+//				子区域的起始偏移量
+//				要比较的字符个数
 				str.regionMatches(true, 0, prefix, 0, prefix.length()));
 	}
 
@@ -358,6 +388,7 @@ public abstract class StringUtils {
 	/**
 	 * Test whether the given string matches the given substring
 	 * at the given index.
+	 * 在给定索引处,是否匹配给定子CharSequence
 	 * @param str the original string (or StringBuilder)
 	 * @param index the index in the original string to start matching against
 	 * @param substring the substring to match at the given index
@@ -375,7 +406,9 @@ public abstract class StringUtils {
 	}
 
 	/**
+	 *
 	 * Count the occurrences of the substring {@code sub} in string {@code str}.
+	 * 计算字符串中,子字符串出现的个数
 	 * @param str string to search in
 	 * @param sub string to search for
 	 */
@@ -396,6 +429,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Replace all occurrences of a substring within a string with another string.
+	 * 将inString中的oldPattern替换为newPattern
 	 * @param inString {@code String} to examine
 	 * @param oldPattern {@code String} to replace
 	 * @param newPattern {@code String} to insert
@@ -622,9 +656,12 @@ public abstract class StringUtils {
 	 * Apply the given relative path to the given Java resource path,
 	 * assuming standard Java folder separation (i.e. "/" separators).
 	 * @param path the path to start from (usually a full file path)
+	 *             开始的路径,通常是完整的文件路径
 	 * @param relativePath the relative path to apply
+	 *                     需要应用的相对路径
 	 * (relative to the full file path above)
 	 * @return the full file path that results from applying the relative path
+	 * 应用相对路径得到的完整绝对路径
 	 */
 	public static String applyRelativePath(String path, String relativePath) {
 		int separatorIndex = path.lastIndexOf(FOLDER_SEPARATOR);
@@ -643,11 +680,13 @@ public abstract class StringUtils {
 	/**
 	 * Normalize the path by suppressing sequences like "path/.." and
 	 * inner simple dots.
+	 * 规范化路径
 	 * <p>The result is convenient for path comparison. For other uses,
 	 * notice that Windows separators ("\") are replaced by simple slashes.
 	 * @param path the original path
 	 * @return the normalized path
 	 */
+//	TODO
 	public static String cleanPath(String path) {
 		if (!hasLength(path)) {
 			return path;
@@ -722,6 +761,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Compare two paths after normalization of them.
+	 * 规范化路径进行比较
 	 * @param path1 first path for comparison
 	 * @param path2 second path for comparison
 	 * @return whether the two paths are equivalent after normalization
@@ -732,6 +772,7 @@ public abstract class StringUtils {
 
 	/**
 	 * Decode the given encoded URI component value. Based on the following rules:
+	 * 解码给定的已编码URI组件值。基于以下规则:
 	 * <ul>
 	 * <li>Alphanumeric characters {@code "a"} through {@code "z"}, {@code "A"} through {@code "Z"},
 	 * and {@code "0"} through {@code "9"} stay the same.</li>

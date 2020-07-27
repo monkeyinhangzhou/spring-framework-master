@@ -171,9 +171,13 @@ public abstract class ClassUtils {
 	}
 
 	/**
-	 * Return the default ClassLoader to use: typically the thread context
-	 * ClassLoader, if available; the ClassLoader that loaded the ClassUtils
+	 * Return the default ClassLoader to use:
+	 * 返回要使用的默认类加载器
+	 * typically the thread context ClassLoader,
+	 * 典型的线程上下文类加载器
+	 * if available; the ClassLoader that loaded the ClassUtils
 	 * class will be used as fallback.
+	 * 如果可用,加载类的加载器,类将作为储备
 	 * <p>Call this method if you intend to use the thread context ClassLoader
 	 * in a scenario where you clearly prefer a non-null ClassLoader reference:
 	 * for example, for class path resource loading (but not necessarily for

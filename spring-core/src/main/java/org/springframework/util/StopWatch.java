@@ -26,6 +26,7 @@ import org.springframework.lang.Nullable;
 /**
  * Simple stop watch, allowing for timing of a number of tasks, exposing total
  * running time and running time for each named task.
+ * 简单秒表,允许定时任务,展示运行时间,每个指定任务的运行时间
  *
  * <p>Conceals use of {@link System#nanoTime()}, improving the readability of
  * application code and reducing the likelihood of calculation errors.
@@ -58,12 +59,14 @@ public class StopWatch {
 	private final List<TaskInfo> taskList = new LinkedList<>();
 
 	/** Start time of the current task. */
+//	当前任务启动时间(单位纳秒)
 	private long startTimeNanos;
 
 	/** Name of the current task. */
 	@Nullable
 	private String currentTaskName;
 
+	//内部类,用于保存运行任务的数据
 	@Nullable
 	private TaskInfo lastTaskInfo;
 

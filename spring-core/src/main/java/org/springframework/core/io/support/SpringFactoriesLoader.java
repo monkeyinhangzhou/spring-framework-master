@@ -63,6 +63,7 @@ public final class SpringFactoriesLoader {
 
 	/**
 	 * The location to look for factories.
+	 * 寻找工厂的位置
 	 * <p>Can be present in multiple JAR files.
 	 */
 	public static final String FACTORIES_RESOURCE_LOCATION = "META-INF/spring.factories";

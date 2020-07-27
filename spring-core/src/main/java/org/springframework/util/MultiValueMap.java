@@ -23,6 +23,7 @@ import org.springframework.lang.Nullable;
 
 /**
  * Extension of the {@code Map} interface that stores multiple values.
+ * 存储多个值的接口扩展
  *
  * @author Arjen Poutsma
  * @since 3.0
@@ -33,6 +34,7 @@ public interface MultiValueMap<K, V> extends Map<K, List<V>> {
 
 	/**
 	 * Return the first value for the given key.
+	 * 返回给定键的第一个值
 	 * @param key the key
 	 * @return the first value for the specified key, or {@code null} if none
 	 */
@@ -41,6 +43,7 @@ public interface MultiValueMap<K, V> extends Map<K, List<V>> {
 
 	/**
 	 * Add the given single value to the current list of values for the given key.
+	 * 将给定键的单个值,添加到给定键的当前值列表
 	 * @param key the key
 	 * @param value the value to be added
 	 */
@@ -48,6 +51,7 @@ public interface MultiValueMap<K, V> extends Map<K, List<V>> {
 
 	/**
 	 * Add all the values of the given list to the current list of values for the given key.
+	 * 给定列表的所有值,添加到给定键的当前值列表
 	 * @param key they key
 	 * @param values the values to be added
 	 * @since 5.0
@@ -56,6 +60,7 @@ public interface MultiValueMap<K, V> extends Map<K, List<V>> {
 
 	/**
 	 * Add all the values of the given {@code MultiValueMap} to the current values.
+	 * 给定列表的所有值,添加到当前键的当前值列表
 	 * @param values the values to be added
 	 * @since 5.0
 	 */
@@ -63,6 +68,7 @@ public interface MultiValueMap<K, V> extends Map<K, List<V>> {
 
 	/**
 	 * {@link #add(Object, Object) Add} the given value, only when the map does not
+	 * 当没有给定键时,才添加给定键和给定值
 	 * {@link #containsKey(Object) contain} the given key.
 	 * @param key the key
 	 * @param value the value to be added
@@ -76,6 +82,7 @@ public interface MultiValueMap<K, V> extends Map<K, List<V>> {
 
 	/**
 	 * Set the given single value under the given key.
+	 * 给定键设置给定单个值
 	 * @param key the key
 	 * @param value the value to set
 	 */
