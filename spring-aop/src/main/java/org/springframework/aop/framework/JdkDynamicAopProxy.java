@@ -37,21 +37,33 @@ import org.springframework.util.ClassUtils;
 
 /**
  * JDK-based {@link AopProxy} implementation for the Spring AOP framework,
+ * spring aop 框架基于jdk代理的实现
+ *
  * based on JDK {@link java.lang.reflect.Proxy dynamic proxies}.
+ * 基于jdk动态代理
  *
  * <p>Creates a dynamic proxy, implementing the interfaces exposed by
- * the AopProxy. Dynamic proxies <i>cannot</i> be used to proxy methods
+ * the AopProxy.
+ * 创建动态代理,由AopProxy实现
+ * Dynamic proxies <i>cannot</i> be used to proxy methods
  * defined in classes, rather than interfaces.
+ * 动态代理不能用于代理方法在类中定义，而不是在接口中。
  *
  * <p>Objects of this type should be obtained through proxy factories,
- * configured by an {@link AdvisedSupport} class. This class is internal
+ * 这种类型的对象应该通过代理工厂获得
+ * configured by an {@link AdvisedSupport} class.
+ * 由AdvisedSupport配置.
+ * This class is internal
  * to Spring's AOP framework and need not be used directly by client code.
+ * 这个类是内部的,不需要客户端代码直接使用.
  *
  * <p>Proxies created using this class will be thread-safe if the
  * underlying (target) class is thread-safe.
+ * 使用此类创建的代理是线程安全的,底层目标类是线程安全的.
  *
  * <p>Proxies are serializable so long as all Advisors (including Advices
  * and Pointcuts) and the TargetSource are serializable.
+ * 代理是可序列化的.
  *
  * @author Rod Johnson
  * @author Juergen Hoeller
@@ -80,24 +92,30 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 	private static final Log logger = LogFactory.getLog(JdkDynamicAopProxy.class);
 
 	/** Config used to configure this proxy. */
+//	配置此代理的配置
 	private final AdvisedSupport advised;
 
 	/**
 	 * Is the {@link #equals} method defined on the proxied interfaces?
+	 * equals是否定义在代理接口上.
 	 */
 	private boolean equalsDefined;
 
 	/**
 	 * Is the {@link #hashCode} method defined on the proxied interfaces?
+	 * hashCode是否定义在代理接口上.
 	 */
 	private boolean hashCodeDefined;
 
 
 	/**
 	 * Construct a new JdkDynamicAopProxy for the given AOP configuration.
+	 * 为给定的AOP配置构建新的JdkDynamicAopProxy
 	 * @param config the AOP configuration as AdvisedSupport object
+	 *               AOP配置对象(AdvisedSupport)
 	 * @throws AopConfigException if the config is invalid. We try to throw an informative
 	 * exception in this case, rather than let a mysterious failure happen later.
+	 * AOP配置异常
 	 */
 	public JdkDynamicAopProxy(AdvisedSupport config) throws AopConfigException {
 		Assert.notNull(config, "AdvisedSupport must not be null");
@@ -206,18 +224,22 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 			}
 			else {
 				// We need to create a method invocation...
+//				我们需要创建一个方法调用
 				MethodInvocation invocation =
 						new ReflectiveMethodInvocation(proxy, target, method, args, targetClass, chain);
 				// Proceed to the joinpoint through the interceptor chain.
+//				通过拦截器链继续到joinpoint。
 				retVal = invocation.proceed();
 			}
 
 			// Massage return value if necessary.
+//			消息返回值,如果需要
 			Class<?> returnType = method.getReturnType();
 			if (retVal != null && retVal == target &&
 					returnType != Object.class && returnType.isInstance(proxy) &&
 					!RawTargetAccess.class.isAssignableFrom(method.getDeclaringClass())) {
 				// Special case: it returned "this" and the return type of the method
+//				特殊情况:它返回“this”和方法的返回类型
 				// is type-compatible. Note that we can't help if the target sets
 				// a reference to itself in another returned object.
 				retVal = proxy;
@@ -235,6 +257,7 @@ final class JdkDynamicAopProxy implements AopProxy, InvocationHandler, Serializa
 			}
 			if (setProxyContext) {
 				// Restore old proxy.
+//				恢复旧的代理
 				AopContext.setCurrentProxy(oldProxy);
 			}
 		}

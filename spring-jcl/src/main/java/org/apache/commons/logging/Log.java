@@ -107,6 +107,7 @@ public interface Log {
 
 	/**
 	 * Is trace logging currently enabled?
+	 * 当前是否启用了跟踪日志记录
 	 * <p>Call this method to prevent having to perform expensive operations
 	 * (for example, <code>String</code> concatenation)
 	 * when the log level is more than trace.
